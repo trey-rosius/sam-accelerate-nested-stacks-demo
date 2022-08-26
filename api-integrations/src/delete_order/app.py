@@ -8,11 +8,13 @@ TABLE_NAME = os.environ.get("ORDER_TABLE")
 dynamodb = boto3.resource("dynamodb")
 table = dynamodb.Table(TABLE_NAME)
 
+
 class DecimalEncoder(json.JSONEncoder):
     def default(self, o):
         if isinstance(o, decimal.Decimal):
             return str(o)
         return super(DecimalEncoder, self).default(o)
+
 
 def delete_order(event):
     order_id = event['pathParameters']['orderId']
@@ -24,6 +26,7 @@ def delete_order(event):
     )
     print(f'delete_order {order_id} response: {response}')
     return response
+
 
 def handler(event, context):
     """Handler function integrated with 
@@ -41,14 +44,8 @@ def handler(event, context):
         Return doc: https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-lambda-proxy-integrations.html
     """
 
-    response = delete_order(event)   
-    return {  
+    response = delete_order(event)
+    return {
         "statusCode": 204,
         "body": json.dumps(response, indent=4, cls=DecimalEncoder)
     }
-    
-
-
-
-
-

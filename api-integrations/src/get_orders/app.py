@@ -6,6 +6,7 @@ from typing import Dict, Any
 ddb_client = boto3.client("dynamodb")
 TABLE_NAME = os.environ.get("ORDER_TABLE")
 
+
 def fetch_all_orders(dynamo_client, table_name):
     results = []
     last_evaluated_key = None
@@ -17,7 +18,7 @@ def fetch_all_orders(dynamo_client, table_name):
             )
         else:
             response = ddb_client.scan(TableName=table_name)
-            
+
         last_evaluated_key = response.get('LastEvaluatedKey')
 
         results.extend(response['Items'])
@@ -30,12 +31,7 @@ def fetch_all_orders(dynamo_client, table_name):
 
 def handler(event, context):
     items = fetch_all_orders(ddb_client, TABLE_NAME)
-    return {  
+    return {
         "statusCode": 200,
         "body": json.dumps(items, indent=4)
     }
-
-
-
-
-

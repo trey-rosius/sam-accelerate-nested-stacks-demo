@@ -125,7 +125,7 @@ If you would like to see the full solution work, read below.
 curl https://m9wpqruuwk.execute-api.us-east-1.amazonaws.com/Dev/orders/ | python -
 m json.tool
 ```
-
+ 
 ```json
 [
   {

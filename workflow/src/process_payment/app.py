@@ -4,6 +4,7 @@ import os
 import math
 import random
 
+
 def handler(event, context):
     payment_result = {}
     payment_state = ['ok', 'error']
